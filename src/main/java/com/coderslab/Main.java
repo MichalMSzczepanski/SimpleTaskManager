@@ -3,6 +3,7 @@ package com.coderslab;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,10 +55,9 @@ public class Main {
 
                 for (int i = 0; i < arrayOfTasks.length; i++) {
                     String taskLine = arrayCreationScanner.nextLine();
-                    String[] taskLineArray = taskLine.split(","); // french 2020 true
+                    String[] taskLineArray = taskLine.split(", ");
                     for (int j = 0; j < arrayOfTasks[i].length; j++) {
                         arrayOfTasks[i][j] = taskLineArray[j];
-//                        System.out.println(arrayOfTasks[i][j]); // CHECKING IF THIS WORKS
                     }
 
                 }
@@ -79,15 +79,6 @@ public class Main {
 
                         arrayOfTasks = Arrays.copyOf(arrayOfTasks, arrayOfTasks.length + 1);
 
-//                       // PRINT ALL TASKS TO VERIFY IF NEW LINE FOR NEW TASK ADDED
-//
-//                        for (int i = 0; i < arrayOfTasks.length; i++) {
-//                            for (int j = 0; j < arrayOfTasks[i].length; j++) {
-//                                System.out.print(arrayOfTasks[i][j] + " ");
-//                            }
-//                            System.out.println();
-//                        }
-
                         String[] addedTask = new String[3];
 
                         // description
@@ -104,18 +95,9 @@ public class Main {
 
                         System.out.println("your added task is: " + Arrays.toString(arrayOfTasks[arrayOfTasks.length -1])); // validate if task was added
 
-//                         PRINT ALL TASKS TO VERIFY IF NEW LINE FOR NEW TASK ADDED
-
-//                        for (int i = 0; i < arrayOfTasks.length; i++) {
-//                            for (int j = 0; j < arrayOfTasks[i].length; j++) {
-//                                System.out.print(arrayOfTasks[i][j] + " ");
-//                            }
-//                            System.out.println();
-//                        }
+                        callOptions(options, taskAmount);
 
                         break;
-
-
 
                     case "remove":
                         System.out.println("Please select tak to remove");
@@ -132,7 +114,11 @@ public class Main {
                             if (taskToRemove >= 0 && taskToRemove < arrayOfTasks.length) {
                                 arrayOfTasks = ArrayUtils.remove(arrayOfTasks, taskToRemove);
                                 System.out.println("removed task number " + taskToRemove);
+
+                                callOptions(options, taskAmount);
+
                                 break;
+
                             } else {
                                 System.out.println("provided value is below zero or reaches beyond the array, try again");
                             }
@@ -142,40 +128,36 @@ public class Main {
                     case "list":
 
                         for (int i = 0; i < arrayOfTasks.length; i++) {
-                            System.out.print(i + " : ");
-                            for (int j = 0; j < arrayOfTasks[i].length; j++) {
-                                System.out.print(arrayOfTasks[i][j] + " ");
-                            }
-                            System.out.println();
+                            String[] finalTaskArray = arrayOfTasks[i];
+                            String finalString = String.join(", ", finalTaskArray);
+                            System.out.println(i + " : " + finalString);
                         }
+
+                        callOptions(options, taskAmount);
+
                 }
 
                 if (choice.equals("quit")) {
 
-                    List<String> outList = new ArrayList<>();
+                    PrintWriter printWriter = new PrintWriter("/Users/mike/Dropbox/01podstawyJava/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
                     for (int i = 0; i < arrayOfTasks.length; i++) {
-                        outList.add(Arrays.toString(arrayOfTasks[i]));
-                    }
-                    try {
-                        Files.write(dataSource, outList);
-                    } catch (IOException ex) {
-                        System.out.println("cannot save to file");
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int j = 0; j < arrayOfTasks[i].length - 1; j++) {
+                            stringBuilder.append(arrayOfTasks[i][j] + ", ");
+                        }
+                        stringBuilder.append(arrayOfTasks[i][2]);
+                        printWriter.println(stringBuilder);
                     }
 
+                    printWriter.close();
+
                     System.out.println();
-                    System.out.println("any changes saved, bye!");
+                    System.out.println(ConsoleColors.RED + "any changes saved, bye!");
+                    System.out.print(ConsoleColors.RESET);
                     System.out.println();
                     break;
                 }
             }
-
-                System.out.println();
-                System.out.println("Please select an option");
-                for(String optionsString : options){
-                    System.out.println(optionsString);
-                }
-
-
 
         } catch (IOException e) {
             System.out.println("issue with file");
@@ -185,39 +167,12 @@ public class Main {
 
     private static void callOptions(String[] options, int taskAmount) {
         System.out.println();
-        System.out.println("Please select an option");
+        System.out.println(ConsoleColors.BLUE + "Please select an option");
+        System.out.print(ConsoleColors.RESET);
         for(String optionsString : options){
             System.out.println(optionsString);
         }
         System.out.println("(the current number of registered tasks is: " + taskAmount + ")");
-    }
-
-
-    // METHOD LISTING TASKS
-
-    public static void listTasks(){
-        // PRINTING TASKS FROM CSV FILE
-
-//        Path dataSource = Paths.get("/Users/mike/Dropbox/01podstawyJava/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
-//        try(Scanner choiceListTasks = new Scanner(dataSource)) {
-//            int taskCounter = 1;
-//            while (choiceListTasks.hasNextLine()) {
-//                String task = choiceListTasks.nextLine();
-//                System.out.println(taskCounter + " : " + task);
-//                taskCounter++;
-//            }
-//        } catch (IOException e){
-//            System.out.println("file not found");
-//        }
-
-    }
-
-    // METHOD ADDING TASK
-
-    public static void addTask(){
-
-
-
     }
 
 }
