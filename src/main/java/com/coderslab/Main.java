@@ -3,11 +3,12 @@ package com.coderslab;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -16,11 +17,11 @@ public class Main {
 
         final String[] options = {"add", "remove", "list", "quit"};
 
-        System.out.println("Please select an option");
-
-        for(String optionsString : options){
-            System.out.println(optionsString);
-        }
+//        System.out.println("Please select an option");
+//
+//        for(String optionsString : options){
+//            System.out.println(optionsString);
+//        }
 
         // PATH TO FILE WITH TASKS
 
@@ -40,9 +41,6 @@ public class Main {
                 String taskName = dataSourceInput.nextLine(); // dodane bo inaczej nie wyswietlal sie napis "the number or registered tasks..."
                 taskAmount++;
             }
-
-            System.out.println("(the number of registered tasks is: " + taskAmount + ")");
-
 
             // TRANSFER STRINGS, VERSE BY VERSE INTO TABLE OF STRINGS AFTER SPLITTING THEM INTO SEPARATE STRINGS
 
@@ -67,6 +65,8 @@ public class Main {
             }
 
             // CHOSE THE ACTION
+
+            callOptions(options, taskAmount);
 
             Scanner userInput = new Scanner(System.in);
 
@@ -115,6 +115,8 @@ public class Main {
 
                         break;
 
+
+
                     case "remove":
                         System.out.println("Please select tak to remove");
                         Scanner taskToBeRemoved = new Scanner(System.in);
@@ -150,7 +152,15 @@ public class Main {
 
                 if (choice.equals("quit")) {
 
-
+                    List<String> outList = new ArrayList<>();
+                    for (int i = 0; i < arrayOfTasks.length; i++) {
+                        outList.add(Arrays.toString(arrayOfTasks[i]));
+                    }
+                    try {
+                        Files.write(dataSource, outList);
+                    } catch (IOException ex) {
+                        System.out.println("cannot save to file");
+                    }
 
                     System.out.println();
                     System.out.println("any changes saved, bye!");
@@ -171,6 +181,15 @@ public class Main {
             System.out.println("issue with file");
         }
 
+    }
+
+    private static void callOptions(String[] options, int taskAmount) {
+        System.out.println();
+        System.out.println("Please select an option");
+        for(String optionsString : options){
+            System.out.println(optionsString);
+        }
+        System.out.println("(the current number of registered tasks is: " + taskAmount + ")");
     }
 
 
