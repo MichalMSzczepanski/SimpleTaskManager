@@ -26,7 +26,7 @@ public class Main {
 
         // PATH TO FILE WITH TASKS
 
-        Path dataSource = Paths.get("/Users/mike/Dropbox/01podstawyJava/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
+        Path dataSource = Paths.get("/Users/mike/Dropbox/01podstawyJava/ONL_JEE_W_04_Podstawy_Java/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
 
         if(!Files.exists(dataSource)){
             System.out.println("ALERT - file not found");
@@ -47,7 +47,7 @@ public class Main {
 
             String[][] arrayOfTasks = new String[taskAmount][3];
 
-            Path arrayCreation = Paths.get("/Users/mike/Dropbox/01podstawyJava/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
+            Path arrayCreation = Paths.get("/Users/mike/Dropbox/01podstawyJava/ONL_JEE_W_04_Podstawy_Java/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
 
             Scanner arrayCreationScanner = new Scanner(arrayCreation);
 
@@ -100,7 +100,7 @@ public class Main {
                         break;
 
                     case "remove":
-                        System.out.println("Please select tak to remove");
+                        System.out.println("Please select task to remove");
                         Scanner taskToBeRemoved = new Scanner(System.in);
                         while(taskToBeRemoved.hasNextLine()) {
                             while (!taskToBeRemoved.hasNextInt()) {
@@ -139,7 +139,7 @@ public class Main {
 
                 if (choice.equals("quit")) {
 
-                    PrintWriter printWriter = new PrintWriter("/Users/mike/Dropbox/01podstawyJava/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
+                    PrintWriter printWriter = new PrintWriter("/Users/mike/Dropbox/01podstawyJava/ONL_JEE_W_04_Podstawy_Java/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
                     for (int i = 0; i < arrayOfTasks.length; i++) {
                         StringBuilder stringBuilder = new StringBuilder();
                         for (int j = 0; j < arrayOfTasks[i].length - 1; j++) {
