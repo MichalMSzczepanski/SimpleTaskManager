@@ -7,9 +7,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,12 +15,6 @@ public class Main {
     public static void main(String[] args) {
 
         final String[] options = {"add", "remove", "list", "quit"};
-
-//        System.out.println("Please select an option");
-//
-//        for(String optionsString : options){
-//            System.out.println(optionsString);
-//        }
 
         // PATH TO FILE WITH TASKS
 
@@ -47,9 +39,7 @@ public class Main {
 
             String[][] arrayOfTasks = new String[taskAmount][3];
 
-            Path arrayCreation = Paths.get("/Users/mike/Dropbox/01podstawyJava/ONL_JEE_W_04_Podstawy_Java/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
-
-            Scanner arrayCreationScanner = new Scanner(arrayCreation);
+            Scanner arrayCreationScanner = new Scanner(dataSource);
 
             while(arrayCreationScanner.hasNextLine()){
 
@@ -139,10 +129,11 @@ public class Main {
 
                 if (choice.equals("quit")) {
 
-                    PrintWriter printWriter = new PrintWriter("/Users/mike/Dropbox/01podstawyJava/ONL_JEE_W_04_Podstawy_Java/warsztat/05_attachment_Zasoby do projektu.pl/tasks.csv");
+                    PrintWriter printWriter = new PrintWriter(String.valueOf(dataSource));
                     for (int i = 0; i < arrayOfTasks.length; i++) {
                         StringBuilder stringBuilder = new StringBuilder();
                         for (int j = 0; j < arrayOfTasks[i].length - 1; j++) {
+
                             stringBuilder.append(arrayOfTasks[i][j] + ", ");
                         }
                         stringBuilder.append(arrayOfTasks[i][2]);
